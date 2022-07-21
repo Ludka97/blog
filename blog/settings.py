@@ -12,6 +12,8 @@ https://docs.djangoproject.com/en/4.0/ref/settings/
 
 from pathlib import Path
 
+import os
+
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -20,10 +22,10 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/4.0/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-f-3(uus3c!iyzbzpsot91x1he20!c!0+#9ecjh^vei-&+m+v!l'
+SECRET_KEY = os.environ.get('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = os.environ.get('DEBUG')
 
 ALLOWED_HOSTS = []
 
@@ -78,7 +80,8 @@ WSGI_APPLICATION = 'blog.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'NAME': os.environ.get('DATABASE_PATH'),
+        'SOME_VAR_ENV': os.environ.get('SOME_VAR_ENV'),
     }
 }
 
@@ -123,3 +126,31 @@ STATIC_URL = 'static/'
 # https://docs.djangoproject.com/en/4.0/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+
+LOGGING = {
+    'version': 1,
+    'disable_existing_loggers': False,
+    'handlers': {
+         'console': {
+             'class': 'logging.StreamHandler',
+         },
+    },
+    'loggers': {
+         '': {
+             'handlers': ['console'],
+             'level': 'INFO',
+         },
+         'django.db.backends': {
+             'handlers': ['console'],
+             'level': 'ERROR',
+         }
+    }
+}
+
+
+SOME_VAR_ENV = os.environ.get("SOME_VAR_ENV")
+
+AGE = os.environ.get("AGE")
+ALLOWED = os.environ.get("ALLOWED")
+DENIED = os.environ.get("DENIED")
