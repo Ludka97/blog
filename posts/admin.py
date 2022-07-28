@@ -22,3 +22,4 @@ class PostAdmin(admin.ModelAdmin):
     search_fields = ("title",)
 
 
+

@@ -4,7 +4,7 @@ from django.shortcuts import render
 from django.http import HttpResponse
 import logging
 
-from posts.models import Post, Address
+from posts.models import Post
 
 logger = logging.getLogger(__name__)
 
@@ -32,12 +32,12 @@ def index(request):
 
  # searching by GET param
 
-def searching(request):
-    if request.GET.get("city"):
-        city_list = Address.objects.filter(city__icontains=request.GET.get("city"))
-    else:
-        city_list = Address.objects.all()
-    return HttpResponse(",".join([x.city for x in city_list]))
+# def searching(request):
+#     if request.GET.get("city"):
+#         city_list = Address.objects.filter(city__icontains=request.GET.get("city"))
+#     else:
+#         city_list = Address.objects.all()
+#     return HttpResponse(",".join([x.city for x in city_list]))
 
 
 # function for filter posts by current user

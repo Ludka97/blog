@@ -18,9 +18,11 @@ from django.urls import path
 
 from posts.views import index
 from profiles.views import profiles
+from shop.views import products
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', index, name='index'),
-    path('profiles/', profiles, name='profiles')
+    path('profiles/', profiles, name='profiles'),
+    path('products/', products, name='shop'),
 ]
