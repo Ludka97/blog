@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+
+{% block title %}Homepage{% endblock %}
+
+{% block content %}
+    <div class="container">
+      <h1>Information</h1>
+       <div class="row">
+           <div class="col">
+             {{ product_info }}
+               {{ user_info }}
+                 </div>
+       </div>
+      <form method="POST" class="post-form">
+        {% csrf_token %}
+        {{ form.as_p }}
+    <button type="submit" class="save btn btn-default">Go ahead</button>
+  </form>
+
+  </div>
+{% endblock %}

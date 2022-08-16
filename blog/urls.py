@@ -15,14 +15,27 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
-
-from posts.views import index
-from profiles.views import profiles
-from shop.views import products
-
+from django.conf import settings
+from posts.views import index, post_add
+from profiles.views import profiles, register, login_view, logout_view
+from shop.views import products, product_get
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', index, name='index'),
+    path('post-add/', post_add, name='post-add'),
     path('profiles/', profiles, name='profiles'),
+    path('register/', register, name='register'),
     path('products/', products, name='shop'),
+    path('products/product_info', product_get, name='product_info'),
+    path('login/', login_view, name='login'),
+    path('logout/', logout_view, name='logout'),
 ]
+
+
+if settings.DEBUG:
+    from django.conf.urls.static import static
+    from django.contrib.staticfiles.urls import staticfiles_urlpatterns
+
+    # Serve static and media files from development server
+    urlpatterns += staticfiles_urlpatterns()
+    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
