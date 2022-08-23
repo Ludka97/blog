@@ -26,3 +26,11 @@ class GameFactory(DjangoModelFactory):
    platform = factory.Faker("word")
    progress = random.randrange(start=0, stop=100)
    comment = factory.Faker("sentence")
+
+
+class UserFactory(DjangoModelFactory):
+   class Meta:
+       model = User
+
+   username = factory.Faker("word")
+   email= factory.Faker("email")
