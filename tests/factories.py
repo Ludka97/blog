@@ -1,11 +1,12 @@
 import random
-
 import factory
+import factory.fuzzy
 from factory.django import DjangoModelFactory
 from django.contrib.auth.models import User
 
 from posts.models import Post
 from games.models import Game
+from shop.models import Product, COLOR_CHOICES, Purchase
 
 
 class PostFactory(DjangoModelFactory):
@@ -34,3 +35,21 @@ class UserFactory(DjangoModelFactory):
 
    username = factory.Faker("word")
    email= factory.Faker("email")
+
+
+class ProductFactory(DjangoModelFactory):
+   class Meta:
+       model = Product
+
+   title = factory.Faker("company")
+   color = factory.fuzzy.FuzzyChoice(dict(COLOR_CHOICES).keys())
+   cost = factory.Faker("pyint", min_value=1, max_value=100)
+
+
+class PurchaseFactory(DjangoModelFactory):
+   class Meta:
+       model = Purchase
+
+   user = factory.SubFactory(UserFactory)
+   product = factory.SubFactory(ProductFactory)
+   count = factory.Faker("pyint", min_value=1, max_value=100)

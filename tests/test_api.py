@@ -5,7 +5,9 @@ from django.contrib.auth.models import User
 from django.test.client import Client
 
 from posts.models import Post
-from tests.factories import PostFactory, GameFactory, UserFactory
+from shop.models import Purchase
+from tests.factories import PostFactory, GameFactory, UserFactory, PurchaseFactory, ProductFactory
+
 
 @pytest.mark.django_db
 class TestViews:
@@ -74,22 +76,3 @@ class TestViews:
         response = self.client.get("/api/games/")
         assert response.status_code == 200
         assert len(response.data["results"]) == 1
-
-    def test_games_create(self):
-        data_games = {
-            "title": "test",
-            "release_data": '2021-08-08',
-            "genre": "adventure",
-            "platform": "PS5",
-            "progress": 78,
-            "comment": "test_comment"
-        }
-        response = self.client.post("/api/games/", data=data_games)
-        assert response.status_code == 201
-
-        response = self.client.get("/api/games/")
-        assert response.status_code == 200
-        assert len(response.data["results"]) == 1
-
-
-
