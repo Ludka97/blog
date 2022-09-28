@@ -27,7 +27,7 @@ SECRET_KEY = os.environ.get('SECRET_KEY', 'django-insecure-f-3(uus3c!iyzbzpsot91
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = os.environ.get('DEBUG', True)
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ["*"]
 
 
 # Application definition
@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'crispy_forms',
     'crispy_bootstrap5',
+    'django_rq',
     'rest_framework',
     'rest_framework.authtoken',
     'django_filters',
@@ -48,6 +49,7 @@ INSTALLED_APPS = [
     'profiles',
     'shop',
     'games',
+    'game',
 ]
 
 
@@ -80,6 +82,7 @@ TEMPLATES = [
     },
 ]
 
+
 CRISPY_ALLOWED_TEMPLATE_PACKS = 'bootstrap5'
 CRISPY_TEMPLATE_PACK = 'bootstrap5'
 
@@ -95,11 +98,31 @@ DATABASES = {
        "NAME": "django",
        "USER": "ludkadj",
        "PASSWORD": "ludkadj",
-       "HOST": "localhost",
+       "HOST": os.environ.get("DATABASE_HOST", "localhost"),
        "PORT": 5432,
    }
 }
 
+
+# https://docs.djangoproject.com/en/4.1/ref/settings/#caches
+
+REDIS_HOST = os.environ.get("REDIS_HOST", "localhost")
+CACHES = {
+   "default": {
+       "BACKEND": "django.core.cache.backends.redis.RedisCache",
+       "LOCATION": f"redis://{REDIS_HOST}:6379",
+   }
+}
+
+
+RQ_QUEUES = {
+   "default": {
+       "HOST": REDIS_HOST,
+       "PORT": 6379,
+       "DB": 0,
+       "DEFAULT_TIMEOUT": 360,
+   },
+}
 
 
 # Password validation
@@ -187,6 +210,8 @@ LOGGING = {
          }
     }
 }
+BOT_TOKEN = os.getenv("BOT_TOKEN")
+CHAT_ID = os.getenv("CHAT_ID")
 
 #
 SOME_VAR_ENV = os.environ.get("SOME_VAR_ENV", "a")

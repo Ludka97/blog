@@ -1,3 +1,4 @@
+from django.core.cache import cache
 from django.db.models import Count, F, QuerySet, Sum
 from django.shortcuts import render
 
@@ -42,6 +43,25 @@ def product_get(request):
     # product_info = product_sorting(product_info, order_by)
     return render(request, "product.html", {"product_info": product_info, "user_info": user_info})
 
-
+#
+# def products(request):
+#     color = request.GET.get("color")
+#     order_by = request.GET.get("order_by")
+#     cache_key =f"products-view.{color}.{order_by}"
+#
+#     result = cache.get("products-view")
+#     if result is not None:
+#         return result
+#
+#     if color:
+#         product_list = Product.objects.filter(color=color)
+#     else:
+#         product_list = Product.objects.all()
+#
+#
+#     product_list = product_sorting(product_list, order_by)
+#     response = render(request, "index.html", {"product_list": product_list})
+#     cache.set("products-view", response, 60 * 60)
+#     return response
 
 # Create your views here.
