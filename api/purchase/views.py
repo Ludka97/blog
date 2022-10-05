@@ -1,34 +1,40 @@
-from rest_framework.exceptions import NotAuthenticated
-from django_filters import FilterSet, NumberFilter
-from django_filters.rest_framework import DjangoFilterBackend
+
+from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 
-from api.purchase.serializers import PurchaseSerializer, ProductSerializer
+from api.purchase.serializers import PurchaseSerializer, ProductSerializer, PurchaseCreateSerializer
 from shop.models import Purchase, Product
 from rest_framework import generics, status
 from rest_framework import filters as rest_filters
+from django_filters import FilterSet, NumberFilter
+from django_filters.rest_framework import DjangoFilterBackend
+from shop.service import get_popular_products
 
 
 class ProductFilter(FilterSet):
 
-   min_cost = NumberFilter(field_name="cost", lookup_expr="gte")
-   max_cost = NumberFilter(field_name="cost", lookup_expr="lte")
+    min_cost = NumberFilter(field_name="cost", lookup_expr="gte")
+    max_cost = NumberFilter(field_name="cost", lookup_expr="lte")
 
-   class Meta:
-       model = Product
-       fields = ["title"]
+    class Meta:
+        model = Product
+        fields = ["title"]
 
 
 class ProductList(generics.ListAPIView):
     serializer_class = ProductSerializer
     queryset = Product.objects.all()
-    filter_backends = [rest_filters.SearchFilter, rest_filters.OrderingFilter, DjangoFilterBackend]
+    filter_backends = [
+        rest_filters.SearchFilter,
+        rest_filters.OrderingFilter,
+        DjangoFilterBackend,
+    ]
     filterset_class = ProductFilter
     search_fields = ["title", "color"]
     ordering_fields = ["title", "cost"]
 
 
-class PurchaseList(generics.ListAPIView):
+class PurchaseList(generics.CreateAPIView, generics.ListAPIView):
     serializer_class = PurchaseSerializer
 
     def get_queryset(self):
@@ -38,11 +44,25 @@ class PurchaseList(generics.ListAPIView):
         return Purchase.objects.filter(user=self.request.user)
 
 
-class ProductCreate(generics.CreateAPIView):
-    serializer_class = ProductSerializer
+class ProductPurchaseView(generics.CreateAPIView):
+    serializer_class = PurchaseCreateSerializer
+    permission_classes = [IsAuthenticated]
 
     def create(self, request, *args, **kwargs):
         serializer = self.get_serializer(data=request.data)
         serializer.is_valid(raise_exception=True)
-        Product.objects.create(**serializer.validated_data)
-        return Response(status=status.HTTP_201_CREATED)
+        try:
+            product = Product.objects.get(id=kwargs.get("product_id"))
+            Purchase.objects.create(
+                user=request.user,
+                product=product,
+                count=serializer.validated_data["count"]
+            )
+            return Response(status=status.HTTP_201_CREATED)
+        except Product.DoesNotExist:
+            return Response(status=status.HTTP_404_NOT_FOUND)
+
+
+class PopularProductList(generics.ListAPIView):
+    serializer_class = ProductSerializer
+    queryset = get_popular_products()

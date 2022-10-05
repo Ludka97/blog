@@ -3,7 +3,7 @@ from rest_framework import routers
 from api.posts.views import PostViewSet
 from api.games.views import GameViewSet
 from api.auth.views import RegisterView, LoginView
-from api.purchase.views import PurchaseList, ProductList, ProductCreate
+from api.purchase.views import PurchaseList, ProductList, ProductPurchaseView, PopularProductList
 app_name = "api"
 
 router = routers.DefaultRouter()
@@ -17,6 +17,7 @@ urlpatterns = [
     path("login/", LoginView.as_view(), name="login"),
     path("purchase/", PurchaseList.as_view(), name="purchase"),
     path("products/", ProductList.as_view(), name="products"),
-    path("products/add/", ProductCreate.as_view(), name="products-add"),
+    path("products/popular/", PopularProductList.as_view(), name="popular_products"),
+    path("products/add/", ProductPurchaseView.as_view(), name="products-add"),
     path("auth/", include("rest_framework.urls", namespace="rest_framework")),
 ]

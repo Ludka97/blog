@@ -6,7 +6,7 @@ from shop.models import Product
 from shop.spiders import OmaSpider
 from scrapy.crawler import CrawlerProcess
 from scrapy.utils.project import get_project_settings
-
+from django.db.models import F, Sum
 
 @job
 def run_oma_spider(dry_run: bool = False):
@@ -21,3 +21,8 @@ def run_oma_spider(dry_run: bool = False):
     process = CrawlerProcess(get_project_settings())
     process.crawl(OmaSpider)
     process.start()
+
+
+def get_popular_products():
+    queryset = Product.objects.annotate(sold=Sum(F("cost") * F("purchases__count")))
+    return queryset.order_by("-sold")

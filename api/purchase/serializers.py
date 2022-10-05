@@ -1,4 +1,3 @@
-from django.conf import settings
 from rest_framework import serializers
 
 from api.profiles.serializers import UserSerializer
@@ -18,3 +17,7 @@ class PurchaseSerializer(serializers.Serializer):
 
     def get_total(self, obj):
         return obj.product.cost * obj.count
+
+
+class PurchaseCreateSerializer(serializers.Serializer):
+    count = serializers.IntegerField()
