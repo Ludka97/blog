@@ -27,6 +27,8 @@ SECRET_KEY = os.environ.get('SECRET_KEY', 'django-insecure-f-3(uus3c!iyzbzpsot91
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = os.environ.get('DEBUG', True)
 
+CSRF_TRUSTED_ORIGINS = ["https://localhost"]
+
 ALLOWED_HOSTS = ["*"]
 
 
@@ -174,9 +176,12 @@ REST_FRAMEWORK = {
    "PAGE_SIZE": 10,
 }
 
+STATICFILES_FINDERS = [
+   "django.contrib.staticfiles.finders.FileSystemFinder",
+   "django.contrib.staticfiles.finders.AppDirectoriesFinder",
+]
 
-
-STATICFILES_DIRS = []
+STATICFILES_DIRS = [BASE_DIR / "blog" / "static"]
 
 STATIC_ROOT = BASE_DIR / "static"
 STATIC_URL = "static/"
