@@ -28,7 +28,7 @@ SECRET_KEY = os.environ.get(
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = os.environ.get("DEBUG", True)
 
-CSRF_TRUSTED_ORIGINS = ["https://localhost"]
+CSRF_TRUSTED_ORIGINS = ["https://localhost", "https://z71-ludka.herokuapp.com"]
 
 ALLOWED_HOSTS = ["*"]
 
@@ -44,7 +44,7 @@ INSTALLED_APPS = [
     "django.contrib.staticfiles",
     "crispy_forms",
     "crispy_bootstrap5",
-    "django_rq",
+   # "django_rq",
     "rest_framework",
     "rest_framework.authtoken",
     "django_filters",
@@ -84,6 +84,7 @@ TEMPLATES = [
     },
 ]
 
+# postgres://jhdbadupasvpzw:2926fef5f0c9f6cfee9d80e7459f35fabe1d78101de83ea152d4a6e09c7b438d@ec2-63-32-248-14.eu-west-1.compute.amazonaws.com:5432/da4hd3aqvrmq2v
 
 CRISPY_ALLOWED_TEMPLATE_PACKS = "bootstrap5"
 CRISPY_TEMPLATE_PACK = "bootstrap5"
@@ -109,11 +110,18 @@ DATABASES = {
 
 # https://docs.djangoproject.com/en/4.1/ref/settings/#caches
 
-REDIS_HOST = os.environ.get("REDIS_HOST", "localhost")
+"""REDIS_HOST = os.environ.get("REDIS_HOST", "localhost")
 CACHES = {
     "default": {
         "BACKEND": "django.core.cache.backends.redis.RedisCache",
         "LOCATION": f"redis://{REDIS_HOST}:6379",
+    }
+}"""
+
+CACHES = {
+    "default": {
+        "BACKEND": "django.core.cache.backends.locmem.LocMemCache",
+        "LOCATION": "unique-snowflake",
     }
 }
 
