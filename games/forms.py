@@ -8,4 +8,3 @@ class GameForm(forms.Form):
     platform = forms.CharField(max_length=20)
     progress = forms.IntegerField()
     comment = forms.CharField(max_length=100)
-

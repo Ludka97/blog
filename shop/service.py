@@ -1,12 +1,14 @@
 from django.core.management.base import BaseCommand
+from django.db.models import F, Sum
 from django_rq import job
 from scrapy import signals
+from scrapy.crawler import CrawlerProcess
 from scrapy.signalmanager import dispatcher
+from scrapy.utils.project import get_project_settings
+
 from shop.models import Product
 from shop.spiders import OmaSpider
-from scrapy.crawler import CrawlerProcess
-from scrapy.utils.project import get_project_settings
-from django.db.models import F, Sum
+
 
 @job
 def run_oma_spider(dry_run: bool = False):

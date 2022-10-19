@@ -1,10 +1,11 @@
 from http.cookiejar import logger
-from django.shortcuts import render, redirect
-from django.http import HttpResponse
-from profiles.forms import RegisterForm, LoginForm
-from django.contrib.auth.models import User
-from django.contrib.auth import logout, login, authenticate
 
+from django.contrib.auth import authenticate, login, logout
+from django.contrib.auth.models import User
+from django.http import HttpResponse
+from django.shortcuts import redirect, render
+
+from profiles.forms import LoginForm, RegisterForm
 from profiles.services import create_user
 
 
@@ -34,7 +35,7 @@ def login_view(request):
         if form.is_valid():
             user = authenticate(request=request, **form.cleaned_data)
             if user is None:
-                return HttpResponse('BadRequest', status=400)
+                return HttpResponse("BadRequest", status=400)
             login(request, user)
             return redirect("index")
     else:
@@ -57,6 +58,7 @@ def profiles(request):
     elif request.POST.get("name") != "Ludka":
         return HttpResponse("Post method")
     return HttpResponse("Profiles index view")
+
 
 #
 #

@@ -1,11 +1,8 @@
 from django.contrib import admin
 
-# Register your models here.
-
-
-from django.contrib import admin
-
 from posts.models import Post, Tag
+
+# Register your models here.
 
 
 @admin.register(Post)
@@ -20,6 +17,3 @@ class PostAdmin(admin.ModelAdmin):
 @admin.register(Tag)
 class PostAdmin(admin.ModelAdmin):
     search_fields = ("title",)
-
-
-

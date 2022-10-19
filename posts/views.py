@@ -1,5 +1,5 @@
 from django.http import HttpResponse
-from django.shortcuts import render, redirect
+from django.shortcuts import redirect, render
 
 from posts.forms import PostForm
 from posts.models import Post
@@ -14,14 +14,14 @@ def post_add(request):
     if not request.user.is_authenticated:
         return HttpResponse("You aren't authenticated!")
 
-    if request.method == 'POST':
+    if request.method == "POST":
         form = PostForm(request.POST, request.FILES)
         if form.is_valid():
             Post.objects.create(author=request.user, **form.cleaned_data)
-            return redirect('index')
+            return redirect("index")
     else:
         form = PostForm()
-    return render(request, 'post_add.html', {'form': form})
+    return render(request, "post_add.html", {"form": form})
 
     # post_list = Post.objects.all()
     # return HttpResponse(",".join([x.title for x in post_list]))
@@ -43,7 +43,7 @@ def post_add(request):
     # return HttpResponse("Posts index view")
 
 
- # searching by GET param
+# searching by GET param
 
 # def searching(request):
 #     if request.GET.get("city"):

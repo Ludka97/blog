@@ -1,9 +1,9 @@
 from django.core.cache import cache
 from django.db.models import Count, F, QuerySet, Sum
+from django.http import HttpResponse
 from django.shortcuts import render
 
-from django.http import HttpResponse
-from shop.models import Purchase, Product
+from shop.models import Product, Purchase
 
 
 def products(request):
@@ -41,7 +41,10 @@ def product_get(request):
     order_by = request.GET.get("order_by")
 
     # product_info = product_sorting(product_info, order_by)
-    return render(request, "product.html", {"product_info": product_info, "user_info": user_info})
+    return render(
+        request, "product.html", {"product_info": product_info, "user_info": user_info}
+    )
+
 
 #
 # def products(request):

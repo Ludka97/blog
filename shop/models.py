@@ -2,12 +2,18 @@ from django.conf import settings
 from django.db import models
 from django.db.models import ImageField
 
-COLOR_CHOICES = (('red', 'Red color'), ('green', 'Green color'), ('white', 'White color'))
+COLOR_CHOICES = (
+    ("red", "Red color"),
+    ("green", "Green color"),
+    ("white", "White color"),
+)
 
 
 class Product(models.Model):
     title = models.CharField(max_length=200)
-    color = models.CharField(max_length=200, choices=COLOR_CHOICES, blank=True, null=True)
+    color = models.CharField(
+        max_length=200, choices=COLOR_CHOICES, blank=True, null=True
+    )
     image = ImageField(upload_to="products/", blank=True, null=True)
     cost = models.DecimalField(decimal_places=2, max_digits=7)
 
@@ -26,5 +32,6 @@ class Purchase(models.Model):
         Product, related_name="purchases", on_delete=models.CASCADE
     )
     count = models.IntegerField()
+
 
 # Create your models here.

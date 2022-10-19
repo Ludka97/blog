@@ -1,8 +1,7 @@
 from django.conf import settings
 from django.core.cache import cache
-from telegram import Update, Bot
+from telegram import Bot, Update
 from telegram.ext import ContextTypes
-
 
 
 async def start(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:

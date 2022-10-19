@@ -1,17 +1,21 @@
 import faker
 import pytest
 from django.contrib.auth.models import User
-
 from django.test.client import Client
 
 from posts.models import Post
 from shop.models import Purchase
-from tests.factories import PostFactory, GameFactory, UserFactory, PurchaseFactory, ProductFactory
+from tests.factories import (
+    GameFactory,
+    PostFactory,
+    ProductFactory,
+    PurchaseFactory,
+    UserFactory,
+)
 
 
 @pytest.mark.django_db
 class TestViews:
-
     def setup_method(self):
         self.client = Client()
         self.fake = faker.Faker()
@@ -31,7 +35,6 @@ class TestViews:
 
         response = self.client.post("/api/login/", data=data)
         assert response.status_code == 200
-
 
     def test_posts_list(self):
         self.client.force_login(self.user)
@@ -64,11 +67,11 @@ class TestViews:
     def test_games_create(self):
         data_games = {
             "title": "test",
-            "release_data": '2021-08-08',
+            "release_data": "2021-08-08",
             "genre": "adventure",
             "platform": "PS5",
             "progress": 78,
-            "comment": "test_comment"
+            "comment": "test_comment",
         }
         response = self.client.post("/api/games/", data=data_games)
         assert response.status_code == 201

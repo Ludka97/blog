@@ -1,9 +1,16 @@
 from django.urls import include, path
 from rest_framework import routers
-from api.posts.views import PostViewSet
+
+from api.auth.views import LoginView, RegisterView
 from api.games.views import GameViewSet
-from api.auth.views import RegisterView, LoginView
-from api.purchase.views import PurchaseList, ProductList, ProductPurchaseView, PopularProductList
+from api.posts.views import PostViewSet
+from api.purchase.views import (
+    PopularProductList,
+    ProductList,
+    ProductPurchaseView,
+    PurchaseList,
+)
+
 app_name = "api"
 
 router = routers.DefaultRouter()

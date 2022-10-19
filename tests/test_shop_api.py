@@ -1,9 +1,8 @@
 import pytest
-
 from django.test.client import Client
 
 from shop.models import Purchase
-from tests.factories import UserFactory, PurchaseFactory, ProductFactory
+from tests.factories import ProductFactory, PurchaseFactory, UserFactory
 
 
 @pytest.mark.django_db
@@ -30,7 +29,9 @@ class TestPurchasesViews:
 
         assert response.status_code == 200
         assert response.data["count"] == 1
-        assert response.data["results"][0]["product"]["title"] == purchase_1.product.title
+        assert (
+            response.data["results"][0]["product"]["title"] == purchase_1.product.title
+        )
 
         purchase_2 = PurchaseFactory(user=self.user)
         self.client.force_login(self.user)
@@ -38,7 +39,9 @@ class TestPurchasesViews:
 
         assert response.status_code == 200
         assert response.data["count"] == 1
-        assert response.data["results"][0]["product"]["title"] == purchase_2.product.title
+        assert (
+            response.data["results"][0]["product"]["title"] == purchase_2.product.title
+        )
 
         assert Purchase.objects.count() == 2
 

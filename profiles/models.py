@@ -8,10 +8,11 @@ class Address(models.Model):
         on_delete=models.CASCADE,
         related_name="address",
         blank=True,
-        null=True
+        null=True,
     )
 
     city = models.CharField(max_length=200)
     address = models.CharField(max_length=200)
+
 
 # Create your models here.
