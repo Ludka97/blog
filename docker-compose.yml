@@ -2,8 +2,8 @@ version: '3.3'
 services:
 
 
-  redis:
-    image: redis:latest
+ # redis:
+ #   image: redis:latest
 
   postgres:
     image: postgres:latest
@@ -22,7 +22,7 @@ services:
       - postgres
     environment:
       - DATABASE_HOST=postgres
-      - REDIS_HOST=redis
+    #  - REDIS_HOST=redis
     command: |
       python manage.py runserver 0.0.0.0:8000
 
@@ -37,7 +37,7 @@ services:
     ports: [ ]
     environment:
       - DATABASE_HOST=postgres
-      - REDIS_HOST=redis
+     # - REDIS_HOST=redis
       - BOT_TOKEN=5674717393:AAEwt1bWE6ceITV91XjHbvdjFvCU773u9cQ
       - CHAT_ID=1327834481
     command: |

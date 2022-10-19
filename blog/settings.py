@@ -185,11 +185,6 @@ REST_FRAMEWORK = {
     "PAGE_SIZE": 10,
 }
 
-STATICFILES_FINDERS = [
-    "django.contrib.staticfiles.finders.FileSystemFinder",
-    "django.contrib.staticfiles.finders.AppDirectoriesFinder",
-]
-
 STATICFILES_DIRS = [BASE_DIR / "blog" / "static"]
 
 STATIC_ROOT = BASE_DIR / "static"
