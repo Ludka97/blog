@@ -126,14 +126,14 @@ CACHES = {
 }
 
 
-RQ_QUEUES = {
+"""RQ_QUEUES = {
     "default": {
         "HOST": REDIS_HOST,
         "PORT": 6379,
         "DB": 0,
         "DEFAULT_TIMEOUT": 360,
     },
-}
+}"""
 
 
 # Password validation
