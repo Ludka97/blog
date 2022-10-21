@@ -1,4 +1,3 @@
-from django.core.management.base import BaseCommand
 from django.db.models import F, Sum
 
 # from django_rq import job

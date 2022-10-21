@@ -3,13 +3,9 @@ import pytest
 from django.contrib.auth.models import User
 from django.test.client import Client
 
-from posts.models import Post
-from shop.models import Purchase
 from tests.factories import (
     GameFactory,
     PostFactory,
-    ProductFactory,
-    PurchaseFactory,
     UserFactory,
 )
 

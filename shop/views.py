@@ -1,9 +1,7 @@
-from django.core.cache import cache
-from django.db.models import Count, F, QuerySet, Sum
-from django.http import HttpResponse
+from django.db.models import F, QuerySet, Sum
 from django.shortcuts import render
 
-from shop.models import Product, Purchase
+from shop.models import Product
 
 
 def products(request):
@@ -38,7 +36,7 @@ def product_get(request):
     else:
         product_info = "Title did not found"
         user_info = "Not available"
-    order_by = request.GET.get("order_by")
+    # order_by = request.GET.get("order_by")
 
     # product_info = product_sorting(product_info, order_by)
     return render(

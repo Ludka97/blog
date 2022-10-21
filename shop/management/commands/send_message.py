@@ -3,7 +3,7 @@ import asyncio
 from django.conf import settings
 from django.core.management.base import BaseCommand
 
-from game.bot import run_bot
+# from game.bot import run_bot
 from game.services import send_message
 
 

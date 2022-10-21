@@ -1,6 +1,6 @@
 from django.contrib import admin
 
-from posts.models import Post, Tag
+from posts.models import Post
 
 # Register your models here.
 
@@ -13,7 +13,7 @@ class PostAdmin(admin.ModelAdmin):
     search_fields = ("title", "slug", "text")
     raw_id_fields = ("author",)
 
-
-@admin.register(Tag)
-class PostAdmin(admin.ModelAdmin):
-    search_fields = ("title",)
+#
+# @admin.register(Tag)
+# class PostAdmin(admin.ModelAdmin):
+#     search_fields = ("title",)
