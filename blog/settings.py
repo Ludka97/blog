@@ -44,7 +44,7 @@ INSTALLED_APPS = [
     "django.contrib.staticfiles",
     "crispy_forms",
     "crispy_bootstrap5",
-   # "django_rq",
+    # "django_rq",
     "rest_framework",
     "rest_framework.authtoken",
     "django_filters",
@@ -104,7 +104,7 @@ DATABASES = {
         "PASSWORD": os.environ.get("DATABASE_PASS", "django"),
         "HOST": os.environ.get("DATABASE_HOST", "localhost"),
         "PORT": 5432,
-   }
+    }
 }
 
 
