@@ -57,3 +57,6 @@ jobs:
           pytest --create-db --disable-warnings
         env:
           REDIS_URL: redis://localhost:${{ job.services.redis.ports[6379] }}
+
+      - name: Build docker image
+        run: docker build -t ludka/django-blog:latest .
